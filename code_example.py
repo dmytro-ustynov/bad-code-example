@@ -4,8 +4,10 @@ from collections import OrderedDict
 
 
 def create_racer_abbreviations_dict(file_name):
+    # don't you think the name for the function like "load_racer_abbreviations_from_file" would be better?
     """Retrieves {'abbreviation': (name, team)}" format dict from abbreviations.txt"""
     abbreviations_dict = {}
+    # the line below can raise a FileNotFoundError
     with open(file_name, 'r') as fn:
         for line in fn:
             matchObj = re.match(r'^(\w+)_([a-zA-Z\s]+)_([a-zA-Z\s]+)$', line)
@@ -24,7 +26,9 @@ abbr_dict = create_racer_abbreviations_dict(
 
 # returns timing log from start.log or end.log in {'abbreviation': time} format
 def retrieve_timings_from_log(file_name):
+    # this function has pretty similar logic with the previous one, it would be better if naming also was similar
     timing_log = {}
+    # the line below can raise a FileNotFoundError
     with open(file_name, 'r') as fn:
         for line in fn:
             # matches 2 groups: abbreviation of a racer and time
@@ -36,7 +40,7 @@ def retrieve_timings_from_log(file_name):
             timing_log[matchObj.group(1)] = lap_time
     return timing_log
 
-
+# these lines should be called from main() method, not from global scope
 start_timings = retrieve_timings_from_log('start.log')
 end_timings = retrieve_timings_from_log('end.log')
 
@@ -53,7 +57,7 @@ def sorted_individual_results(start_timings_, end_timings_, abbr_dict_, reverse_
         sorted(lap_results.items(), key=lambda x: x[1], reverse=reverse_order))
     return sorted_results
 
-
+# these line should be called from main() method, not from global scope
 sorted_lap_results = sorted_individual_results(
     start_timings, end_timings, abbr_dict)
 
@@ -71,5 +75,15 @@ def print_result_board(sorted_lap_results_):
                 '----------------------------------------------------------------------')
         counter += 1
 
-
+# these lines should be called from main() method, not from global scope
 print_result_board(sorted_lap_results)
+
+
+def main():
+    # main logic should be here
+    pass
+
+
+# Added enter point here:
+if __name__ == "__main__":
+    main()
